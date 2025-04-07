@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: telegram-weblogintask
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn backend.app:app
+    envVars:
+      - key: TELEGRAM_BOT_TOKEN
+        fromService: telegram-weblogintask
+      - key: FLASK_ENV
+        value: production
+      - key: FLASK_DEBUG
+        value: 0
+    healthCheckPath: /
+    port: 5000
+    minMemory: 256Mi
+    maxMemory: 512Mi
+    disk: 1Gi
+    cpu: 1
+    autoDeploy: true
+    git:
+      repo: https://github.com/subslink326/telegram_integrated_weblogintaskcompleter.git
+      branch: main
