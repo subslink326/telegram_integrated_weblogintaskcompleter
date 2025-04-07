@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Login Task Manager</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-robot"></i>
+                    <div class="logo-text">
+                        <h1>Web Login Task Manager</h1>
+                        <p>Automate web login tasks with Telegram integration</p>
+                    </div>
+                </div>
+                <button class="telegram-connect" id="connectTelegram">
+                    <i class="fab fa-telegram"></i>
+                    Connect Telegram Bot
+                </button>
+            </div>
+        </header>
+
+        <main class="dashboard">
+            <aside class="sidebar">
+                <nav>
+                    <ul>
+                        <li class="active" data-panel="dashboard">
+                            <i class="fas fa-tachometer-alt"></i>
+                            Dashboard
+                        </li>
+                        <li data-panel="tasks">
+                            <i class="fas fa-tasks"></i>
+                            Tasks
+                        </li>
+                        <li data-panel="settings">
+                            <i class="fas fa-cog"></i>
+                            Settings
+                        </li>
+                        <li data-panel="logs">
+                            <i class="fas fa-list"></i>
+                            Logs
+                        </li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <section class="main-content">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <i class="fas fa-play-circle"></i>
+                        <div class="stat-value" id="activeTasks">0</div>
+                        <div class="stat-label">Active Tasks</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-check-circle"></i>
+                        <div class="stat-value" id="completedTasks">0</div>
+                        <div class="stat-label">Completed Tasks</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-globe"></i>
+                        <div class="stat-value" id="activeIPs">0</div>
+                        <div class="stat-label">Active IPs</div>
+                    </div>
+                </div>
+
+                <div class="tasks-container">
+                    <button class="btn-primary" id="createTaskBtn">
+                        <i class="fas fa-plus"></i>
+                        Create New Task
+                    </button>
+                    <div class="tasks-list" id="tasksList"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal" id="newTaskModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Create New Task</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="taskForm">
+                    <div class="form-group">
+                        <label for="taskName">Task Name</label>
+                        <input type="text" id="taskName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskUrl">URL</label>
+                        <input type="url" id="taskUrl" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="actionsCount">Number of Actions</label>
+                        <input type="number" id="actionsCount" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cyclesCount">Number of Cycles</label>
+                        <input type="number" id="cyclesCount" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Action Type</label>
+                        <div class="radio-group">
+                            <label>
+                                <input type="radio" name="actionType" value="login" checked>
+                                Login
+                            </label>
+                            <label>
+                                <input type="radio" name="actionType" value="logout">
+                                Logout
+                            </label>
+                            <label>
+                                <input type="radio" name="actionType" value="other">
+                                Other
+                            </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-primary" id="createTaskSubmit">Create Task</button>
+                <button class="btn-secondary modal-close">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="settingsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Settings</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Settings content will be added here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
