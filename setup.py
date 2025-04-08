@@ -33,7 +33,7 @@ def create_virtualenv():
     
     # Activate virtual environment
     if sys.platform == 'win32':
-        activate_script = 'venv\Scripts\activate.bat'
+        activate_script = 'venv\\Scripts\\activate.bat'
     else:
         activate_script = 'source venv/bin/activate'
     

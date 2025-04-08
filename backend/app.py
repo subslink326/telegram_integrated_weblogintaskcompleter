@@ -4,11 +4,14 @@ from task_manager import TaskManager
 import os
 import threading
 from dotenv import load_dotenv
+from flask_sockets import Sockets
+import json
 
 # Load environment variables
 load_dotenv()
 
 app = Flask(__name__)
+sockets = Sockets(app)
 CORS(app)
 
 # Use existing TaskManager instead of creating a new Telegram bot instance
@@ -45,5 +48,22 @@ def get_task_status(task_id):
     status = task_manager.get_task_status(task_id)
     return jsonify(status)
 
+@sockets.route('/ws')
+def ws_route(ws):
+    while not ws.closed:
+        message = ws.receive()
+        if message:
+            # Handle incoming WebSocket messages
+            data = task_manager.get_all_tasks()
+            ws.send(json.dumps({
+                'tasks': data,
+                'stats': {
+                    'activeTasks': len([t for t in data if t['status'] == 'active']),
+                    'completedTasks': len([t for t in data if t['status'] == 'completed']),
+                    'activeIPs': len(set(t['ip'] for t in data if t.get('ip')))
+                }
+            }))
+
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    port = int(os.environ.get('FLASK_RUN_PORT', 5000))
+    app.run(debug=True, port=port)
